@@ -1,0 +1,132 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+}
+
+const { title, description, pubDate, updatedDate, tags = [] } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat('ko-KR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(pubDate);
+
+const formattedUpdatedDate = updatedDate
+  ? new Intl.DateTimeFormat('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }).format(updatedDate)
+  : null;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="container post-container">
+    <div class="post-back">
+      <a href="/" class="back-link">&larr; 글 목록으로 돌아가기</a>
+    </div>
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime={pubDate.toISOString()} class="post-date">{formattedDate}</time>
+        {formattedUpdatedDate && (
+          <span class="post-updated">(업데이트: {formattedUpdatedDate})</span>
+        )}
+      </div>
+
+      <h1 class="post-title">{title}</h1>
+
+      <p class="post-description">{description}</p>
+
+      {tags.length > 0 && (
+        <div class="post-tags">
+          {tags.map((tag) => (
+            <a href={`/tags/${tag}`} class="tag-badge">
+              #{tag}
+            </a>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="prose post-content">
+      <slot />
+    </div>
+
+    <footer class="post-footer">
+      <div class="post-back">
+        <a href="/" class="back-link">&larr; 글 목록으로 돌아가기</a>
+      </div>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-container {
+    max-width: 760px;
+  }
+
+  .post-back {
+    margin-bottom: 2rem;
+  }
+
+  .back-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .back-link:hover {
+    color: var(--accent-color);
+  }
+
+  .post-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .post-title {
+    font-size: 2.4rem;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .post-description {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .post-content {
+    line-height: 1.8;
+  }
+
+  .post-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+  }
+</style>

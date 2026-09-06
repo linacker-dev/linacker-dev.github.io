@@ -1,0 +1,141 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const uniqueTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))];
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts
+      .filter((post) => post.data.tags?.includes(tag))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
+};
+---
+
+<BaseLayout title={`#${tag} 태그 글`} description={`#${tag} 태그가 포함된 포스트 목록`}>
+  <div class="container tag-posts-page">
+    <div class="post-back">
+      <a href="/tags" class="back-link">&larr; 전체 태그 목록으로</a>
+    </div>
+
+    <div class="page-header">
+      <h1>#{tag}</h1>
+      <p>총 {posts.length}개의 포스트가 있습니다.</p>
+    </div>
+
+    <div class="posts-list">
+      {posts.map((post) => (
+        <article class="post-card">
+          <div class="post-card-meta">
+            <time datetime={post.data.pubDate.toISOString()}>
+              {formatDate(post.data.pubDate)}
+            </time>
+          </div>
+          <h3 class="post-card-title">
+            <a href={`/posts/${post.id}`}>{post.data.title}</a>
+          </h3>
+          <p class="post-card-desc">{post.data.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tag-posts-page {
+    max-width: 760px;
+  }
+
+  .post-back {
+    margin-bottom: 2rem;
+  }
+
+  .back-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .back-link:hover {
+    color: var(--accent-color);
+  }
+
+  .page-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .page-header h1 {
+    font-size: 2.4rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .page-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+  }
+
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .post-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.2s ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--accent-color);
+  }
+
+  .post-card-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .post-card-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-card-title a {
+    color: var(--text-primary);
+  }
+
+  .post-card-title a:hover {
+    color: var(--accent-color);
+  }
+
+  .post-card-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+</style>

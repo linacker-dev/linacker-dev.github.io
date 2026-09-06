@@ -1,0 +1,193 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
+};
+---
+
+<BaseLayout>
+  <div class="container">
+    <section class="hero-section">
+      <div class="hero-badge">Welcome to my tech blog</div>
+      <h1 class="hero-title">Linacker 의 발코딩</h1>
+      <p class="hero-subtitle">이제는 AI Agentic Coding 을 주로 다룹니다.</p>
+      <div class="hero-links">
+        <a href="https://github.com/linacker-dev" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          GitHub 방문
+        </a>
+        <a href="/about" class="btn btn-secondary">
+          블로그 소개
+        </a>
+      </div>
+    </section>
+
+    <section class="posts-section">
+      <div class="section-header">
+        <h2>최신 포스트 ({posts.length})</h2>
+      </div>
+
+      <div class="posts-list">
+        {posts.map((post) => (
+          <article class="post-card">
+            <div class="post-card-meta">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {formatDate(post.data.pubDate)}
+              </time>
+            </div>
+            <h3 class="post-card-title">
+              <a href={`/posts/${post.id}`}>{post.data.title}</a>
+            </h3>
+            <p class="post-card-desc">{post.data.description}</p>
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="post-card-tags">
+                {post.data.tags.map((tag) => (
+                  <a href={`/tags/${tag}`} class="tag-badge">#{tag}</a>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .hero-section {
+    padding: 3rem 0 4rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 3.5rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    background-color: var(--accent-light);
+    border-radius: 9999px;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin: 0 auto 2rem;
+  }
+
+  .hero-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .btn {
+    padding: 0.65rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background-color: var(--accent-color);
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+    color: #ffffff;
+  }
+
+  .btn-secondary {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .post-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1.75rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--accent-color);
+  }
+
+  .post-card-meta {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .post-card-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-card-title a {
+    color: var(--text-primary);
+  }
+
+  .post-card-title a:hover {
+    color: var(--accent-color);
+  }
+
+  .post-card-desc {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .post-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+</style>

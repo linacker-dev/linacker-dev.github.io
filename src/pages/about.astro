@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="블로그 소개" description="Linacker 의 발코딩 블로그 소개">
+  <div class="container about-page">
+    <div class="page-header">
+      <h1>소개 (About)</h1>
+      <p>Linacker 의 발코딩 블로그에 오신 것을 환영합니다.</p>
+    </div>
+
+    <div class="prose about-content">
+      <h2>👋 안녕하세요, Linacker입니다</h2>
+      <p>
+        과거 손으로 한 땀 한 땀 치던 코딩(소위 '발코딩'이라 부르던 시절)을 지나,
+        <strong>이제는 AI Agentic Coding을 중심으로 소프트웨어를 설계하고 구현하는 이야기</strong>를 기록합니다.
+      </p>
+
+      <h2>💡 주요 관심사</h2>
+      <ul>
+        <li><strong>AI Agentic Coding:</strong> 자율 에이전트, LLM 페어 프로그래밍, 코드 자동화 파이프라인</li>
+        <li><strong>Software Architecture:</strong> 모던 웹 아키텍처 및 정적 사이트, 클라우드 네이티브</li>
+        <li><strong>Developer Experience:</strong> 개발 생산성을 극대화하는 도구와 워크플로우</li>
+      </ul>
+
+      <h2>🌐 도메인 & 연락처</h2>
+      <ul>
+        <li><strong>Domain:</strong> <a href="https://linacker.dev">https://linacker.dev</a></li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/linacker-dev" target="_blank" rel="noopener noreferrer">github.com/linacker-dev</a></li>
+      </ul>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-page {
+    max-width: 760px;
+  }
+
+  .page-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .page-header h1 {
+    font-size: 2.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-header p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+  }
+</style>
