@@ -31,6 +31,11 @@ AI Agentic Coding, 자율 에이전트 개발 워크플로우, 소프트웨어 �
 - Summary: Astro v5 정적 사이트 프레임워크와 GitHub Pages, GitHub Actions 자동 배포 파이프라인을 구축하고, 가비아에서 등록한 커스텀 도메인(linacker.dev)을 DNS A 레코드 및 CNAME으로 연결하는 실전 가이드를 제공합니다.
 - Tags: GitHubPages, Astro, 가비아, 도메인연결
 
+### 4. Anthropic AI-Native SDLC를 실무로 확장하는 5가지 추천 아티클
+- URL: https://linacker.dev/posts/ai-native-sdlc-deep-dive-articles
+- Summary: Anthropic의 The AI-Native SDLC Playbook의 개념적 청사진을 사내 개발자 포털(IDP) 적용, 성과 측정과 ROI 지표화, 실무 개발자의 문서 기반 에이전트 통제, CTO 관점의 멀티 에이전트 거버넌스 아키텍처, 기존 파이프라인의 점진적 전환 관점에서 확장한 5대 핵심 아티클을 추천 및 분석합니다.
+- Tags: AI, SDLC, AgenticCoding, 거버넌스, 엔지니어링
+
 ## Key Links
 - Home: https://linacker.dev
 - All Tags: https://linacker.dev/tags
