@@ -1,0 +1,38 @@
+# Robots.txt for linacker.dev
+# Optimized for Traditional Search Engines (SEO) and Generative AI Engines (GEO)
+
+User-agent: *
+Allow: /
+
+# Explicit rules for Generative AI Crawlers (GEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# Sitemaps and AI Context
+Sitemap: https://linacker.dev/sitemap-index.xml
+Sitemap: https://linacker.dev/rss.xml
+
+# LLM Direct Context (llms.txt standard)
+# https://llmstxt.org
+# Context: https://linacker.dev/llms.txt

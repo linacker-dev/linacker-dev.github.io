@@ -1,23 +1,28 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SEO from '../components/SEO.astro';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
+  type?: 'website' | 'article';
+  pubDate?: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  image?: string;
 }
 
-const defaultTitle = 'Linacker 의 발코딩';
-const defaultDesc = '이제는 AI Agentic Coding 을 주로 다룹니다.';
-
 const {
-  title = defaultTitle,
-  description = defaultDesc,
+  title,
+  description,
+  type = 'website',
+  pubDate,
+  updatedDate,
+  tags,
+  image,
 } = Astro.props;
-
-const pageTitle = title === defaultTitle ? title : `${title} | ${defaultTitle}`;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://linacker.dev');
 ---
 
 <!doctype html>
@@ -28,23 +33,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://linacker
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Primary Meta Tags -->
-    <title>{pageTitle}</title>
-    <meta name="title" content={pageTitle} />
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={pageTitle} />
-    <meta property="twitter:description" content={description} />
+    <SEO
+      title={title}
+      description={description}
+      type={type}
+      pubDate={pubDate}
+      updatedDate={updatedDate}
+      tags={tags}
+      image={image}
+    />
   </head>
   <body>
     <Header />

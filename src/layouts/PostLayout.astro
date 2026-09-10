@@ -26,7 +26,14 @@ const formattedUpdatedDate = updatedDate
   : null;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  tags={tags}
+>
   <article class="container post-container">
     <div class="post-back">
       <a href="/" class="back-link">&larr; 글 목록으로 돌아가기</a>
