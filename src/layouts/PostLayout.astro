@@ -7,9 +7,10 @@ interface Props {
   pubDate: Date;
   updatedDate?: Date;
   tags?: string[];
+  draft?: boolean;
 }
 
-const { title, description, pubDate, updatedDate, tags = [] } = Astro.props;
+const { title, description, pubDate, updatedDate, tags = [], draft = false } = Astro.props;
 
 const formattedDate = new Intl.DateTimeFormat('ko-KR', {
   year: 'numeric',
@@ -44,6 +45,11 @@ const formattedUpdatedDate = updatedDate
         <time datetime={pubDate.toISOString()} class="post-date">{formattedDate}</time>
         {formattedUpdatedDate && (
           <span class="post-updated">(업데이트: {formattedUpdatedDate})</span>
+        )}
+        {draft && (
+          <span class="draft-badge" style="display: inline-block; background: #f59e0b; color: #1e1b4b; font-weight: 700; font-size: 0.75rem; padding: 2px 8px; border-radius: 9999px; margin-left: 8px; vertical-align: middle;">
+            🔒 비공개 초안 (Draft)
+          </span>
         )}
       </div>
 
